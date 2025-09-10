@@ -1,6 +1,6 @@
 
 /*
- * *** PLACE YOUR NAME / SECTION  HERE ***
+ * *** Evey Kallmeyer, COMP 272 002 ***
  *
  * Homework # 1 (Programming Assignment). This Java class defines some basic
  * manipulation operations on Linked-Lists and Stacks.
@@ -48,7 +48,7 @@ public class HW1 {
 
         /*
          * Method sortedInsert() - this method will insert a new node to the
-         * linked list containing the value specific in teh parameter 'data'.
+         * linked list containing the value specific in the parameter 'data'.
          * The newly inserted node will be inserted in sorted order within
          * the linked-list.
          *
@@ -83,11 +83,24 @@ public class HW1 {
          * value that is less than the provided parameter 'ltValue'.
          *
          * The method will invoke the method removeElements for each element
-         * found in the linked-list that is less than thr parameter value passed.
+         * found in the linked-list that is less than the parameter value passed.
          */
         public void removeElementsLT ( int ltValue ) {
+            // Check if the head node is less than ltValue
+            while (head != null && head.data < ltValue) {
+                head = head.next; // if less than, the next node becomes the new head
+            }
+            
+            Node current = head; // set pointer
 
-            // YOUR CODE GOES HERE
+            while (current != null && current.next != null) {
+                // Check if the current node is less than ltValue
+                if (current.next.data < ltValue) {
+                    current.next = current.next.next; // disconnect node from sequence
+                } else {
+                    current = current.next;
+                }
+            }
 
             return;
         }
@@ -99,8 +112,21 @@ public class HW1 {
          */
 
         public void removeElement ( int value ) {
+            // Check if the head node is equal to value
+            while (head != null && head.data == value) {
+                head = head.next; // if equal, the next node becomes the new head
+            }
+            
+            Node current = head; // set pointer
 
-            // YOUR CODE GOES HERE
+            while (current != null && current.next != null) {
+                // Check if the current node is equal to value
+                if (current.next.data == value) {
+                    current.next = current.next.next; // disconnect node from sequence
+                } else {
+                    current = current.next;
+                }
+            }
 
             return;
         }
@@ -160,7 +186,19 @@ public class HW1 {
             Stack<Character> stack = new Stack<>();
             input = input.toLowerCase().replaceAll("\\s+", "");
 
-            // Your CODE GOES HERE
+            // Move all characters into the stack, last character comes out first (LIFO)
+            for (int i = 0; i < input.length(); i++) {
+                stack.push(input.charAt(i));
+            }
+
+            // Check each character, comparing the first to last every time
+            for (int i = 0; i < input.length(); i++) {
+                // compare character to the one being popped off
+                if (input.charAt(i) != stack.pop()) {
+                    return false;
+                }
+            }
+
             return false;
         }
 
@@ -181,11 +219,30 @@ public class HW1 {
          * completed, place them all back in teh original stack.
          */
         public static int findLargestK(Stack<Integer> stack, int k) {
+            int index = stack.size() - 1; // Create index tracker
+            Stack<Integer> temp = new Stack<>(); // Create a temporary stack as storage
 
-            // YOUR CODE GOES HERE
+            // Compare value being popped off to K
+            while (!stack.isEmpty()) {
+                int poppedVal = stack.pop();
+                // Check if popped value equals K and restore stack if so
+                if (poppedVal == k) {
+                    while (!temp.isEmpty()) {
+                        stack.push(temp.pop());
+                    }
+                    return index; // Return index of K value found
+                }
+                temp.push(poppedVal); // Store popped value
+                index--; // Reduce index
+            }
+
+            // Restore original stack
+            while (!temp.isEmpty()) {
+                stack.push(temp.pop());
+            }
+            
             return -1;
         }
-
     }  // End class Stacks
 
 
@@ -219,7 +276,7 @@ public class HW1 {
         */
 
         // RETURN THE CORRECT OPTION NUMBER LISTED ABOVE
-        return -1;
+        return 3;
     }
 
 
@@ -240,7 +297,7 @@ public class HW1 {
          */
 
         // RETURN THE CORRECT OPTION LISTED ABOVE
-        return -1;
+        return 2;
     }
 
 }
