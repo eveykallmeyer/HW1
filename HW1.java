@@ -1,6 +1,6 @@
 
 /*
- * *** Evey Kallmeyer, COMP 272 002 ***
+ * *** Evey Kallmeyer, COMP 272/400C 002 ***
  *
  * Homework # 1 (Programming Assignment). This Java class defines some basic
  * manipulation operations on Linked-Lists and Stacks.
@@ -199,7 +199,7 @@ public class HW1 {
                 }
             }
 
-            return false;
+            return true;
         }
 
 
@@ -225,6 +225,7 @@ public class HW1 {
             // Compare value being popped off to K
             while (!stack.isEmpty()) {
                 int poppedVal = stack.pop();
+                temp.push(poppedVal); // Store popped values
                 // Check if popped value equals K and restore stack if so
                 if (poppedVal == k) {
                     while (!temp.isEmpty()) {
@@ -232,7 +233,6 @@ public class HW1 {
                     }
                     return index; // Return index of K value found
                 }
-                temp.push(poppedVal); // Store popped value
                 index--; // Reduce index
             }
 
